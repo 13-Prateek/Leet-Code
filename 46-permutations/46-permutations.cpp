@@ -1,27 +1,20 @@
 class Solution {
 public:
-    void utility(int freq[], vector<int> &nums, vector<vector<int>> &ans,vector<int> &temp){
-        if(temp.size()==nums.size()){
-            ans.push_back(temp);
+    void utility(int ind, vector<int> &nums, vector<vector<int>> &ans){
+        if(ind==nums.size()){
+            ans.push_back(nums);
             return;
         }
-        for(int i=0;i<nums.size();i++){
-            if(!freq[i]){
-                temp.push_back(nums[i]);
-            freq[i]=1;
-            utility(freq,nums,ans,temp);
-            freq[i]=0;
-            temp.pop_back();
-            }
+        for(int i=ind;i<nums.size();i++){
+            swap(nums[i],nums[ind]);
+            utility(ind+1,nums,ans);
+            swap(nums[i],nums[ind]);
         }
         
     }
     vector<vector<int>> permute(vector<int>& nums) {
         vector<vector<int>> ans;
-        vector<int> temp;
-        int freq[nums.size()];
-        for (int i = 0; i < nums.size(); i++) freq[i] = 0;
-        utility(freq,nums,ans,temp);
+        utility(0,nums,ans);
         return ans;
     }
 };
