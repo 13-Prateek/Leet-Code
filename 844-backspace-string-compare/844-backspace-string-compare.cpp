@@ -1,24 +1,21 @@
 class Solution {
 public:
     void helper(string s,string &news){
-        stack<char> st;
-        for(int i=0;i<s.size();i++){
-            st.push(s[i]);
-        }
+        int i=s.size()-1;
         int bkcount=0;
-        while(!st.empty()){
-            if(st.top()=='#'){
+        while(i>=0){
+            if(s[i]=='#'){
                 bkcount++;
-                st.pop();
+                i--;
             }
             else{
                 if(bkcount==0){
-                    news+=st.top();
-                    st.pop();
+                    news+=s[i];
+                    i--;
                 }
                 else{
                     bkcount--;
-                    st.pop();
+                    i--;
                 }
             }
         }
