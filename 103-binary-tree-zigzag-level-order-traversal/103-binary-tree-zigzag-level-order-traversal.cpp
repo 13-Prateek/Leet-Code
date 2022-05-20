@@ -12,43 +12,35 @@
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        vector<vector<int>> ans;
-        if(root==NULL){
-            return ans;
-        }
-        deque<TreeNode*> q;
-        q.push_back(root);
-        bool flag=false;
-        while(!q.empty()){
-            vector<int> row;
-            int n=q.size();
-            for(int i=0;i<n;i++){
-                if(flag){
-                    auto p=q.front();
-                    q.pop_front();
-                    row.push_back(p->val);
-                    if(p->right){
-                        q.push_back(p->right);
-                    }
-                    if(p->left){
-                        q.push_back(p->left);
-                    }
-                }
-                else{
-                    auto p=q.back();
-                    q.pop_back();
-                    row.push_back(p->val);
-                    if(p->left){
-                        q.push_front(p->left);
-                    }
-                    if(p->right){
-                        q.push_front(p->right);
-                    }
-                }
+        vector<vector<int>>res;
+        if(!root)   return res;
+        vector<int>row;
+        queue<TreeNode*>q;
+        int x=0;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size=q.size();
+            for(int i=0;i<size;i++)
+            {
+                TreeNode*root=q.front();
+                q.pop();
+                row.push_back(root->val);
+                if(root->left!=NULL)
+                    q.push(root->left);
+                if(root->right!=NULL)
+                    q.push(root->right);
             }
-            ans.push_back(row);
-            flag=!flag;
+            if(x%2==0)
+                res.push_back(row);
+            else
+            {
+                reverse(row.begin(),row.end());
+                res.push_back(row);
+            }
+            row.clear();
+            x+=1;
         }
-        return ans;
+        return res;
     }
 };
