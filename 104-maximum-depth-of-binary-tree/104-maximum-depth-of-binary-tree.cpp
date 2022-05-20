@@ -15,23 +15,8 @@ public:
         if(!root){
             return 0;
         }
-        int count=0;
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            int n=q.size();
-            for(int i=0;i<n;i++){
-                auto p=q.front();
-                q.pop();
-                if(p->left){
-                    q.push(p->left);
-                }
-                if(p->right){
-                    q.push(p->right);
-                }
-            }
-            count++;
-        }
-        return count;
+        int lh=maxDepth(root->left);
+        int rh=maxDepth(root->right);
+        return 1+max(lh,rh);
     }
 };
