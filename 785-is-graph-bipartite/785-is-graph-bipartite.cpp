@@ -1,22 +1,16 @@
 class Solution {
 public:
     bool bpt(int src,vector<vector<int>> graph,int color[]){
-        color[src]=1;
-        queue<int> q;
-        q.push(src);
-        while(!q.empty()){
-            int node=q.front();
-            q.pop();
-            for(auto it: graph[node]){
-                if(color[it]==-1){
-                    color[it]=1-color[node];
-                    q.push(it);
-                }
-                else{
-                    if(color[node]==color[it]){
-                        return false;
-                    }
-                }
+        if(color[src]==-1){
+            color[src]=1;
+        }
+        for(auto it: graph[src]){
+            if(color[it]==-1){
+                color[it]=1-color[src];
+                if(!bpt(it,graph,color))return false;
+            }
+            else if(color[it]==color[src]){
+                return false;
             }
         }
         return true;
