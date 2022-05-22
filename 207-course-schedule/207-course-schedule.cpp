@@ -1,49 +1,33 @@
 class Solution {
 public:
-    // bool cycledetect(int s,vector<int> adjList[], vector<int>& visited){
-    //     visited[s]=1;
-    //     queue<pair<int,int>> q;
-    //     q.push({s,-1});
-    //     while(!q.empty()){
-    //         int node=q.front().first;
-    //         int par=q.front().second;
-    //         q.pop();
-    //         for(auto it: adjList[node]){
-    //             if(!visited[it]){
-    //                 q.push({it,node});
-    //                 visited[it]=1;
-    //             }
-    //             else if(it!=par){
-    //                 return false;
-    //             }
-    //         }
-    //     }
-    //     return true;
-    // }
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        queue<int> q; vector<vector<int>> adj(numCourses);
-        vector<int> indegree(numCourses, 0);
-        for(auto c : prerequisites)
-        {
-            adj[c[1]].push_back(c[0]);
-            indegree[c[0]]++ ;
-        }
-        for(int i=0; i<numCourses; i++)
-        {
-            if(indegree[i]==0){q.push(i);}
-        }
-        int cnt = numCourses ;
-        while(!q.empty())
-        {   
-            int node = q.front(); q.pop(); cnt--;
-            for(auto it : adj[node])
-            {
-                indegree[it]--;
-                if(indegree[it] == 0){q.push(it);}
+    bool dfs(int src, vector<vector<int>>& adj, vector<int>& visited, vector<int>& dfsvis){
+        visited[src]=1;
+        dfsvis[src]=1;
+        for(auto it: adj[src]){
+            if(!visited[it]){
+                if(dfs(it,adj,visited,dfsvis)) return true;
+            }
+            else if(dfsvis[it]){
+                return true;
             }
         }
-        if(cnt == 0){return true;}
-        
+        dfsvis[src]=0;
         return false;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adj(numCourses);
+        for(auto c : prerequisites){
+            adj[c[1]].push_back(c[0]);
+        }
+        vector<int> visited(numCourses,0);
+        vector<int> dfsvis(numCourses,0);
+        for(int i=0;i<numCourses;i++){
+            if(!visited[i]){
+                if(dfs(i,adj,visited,dfsvis)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 };
