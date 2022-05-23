@@ -18,36 +18,25 @@ public:
 
 class Solution {
 public:
-    void LoT(Node* root, vector<vector<Node*>>& level){
+    Node* connect(Node* root) {
+        if(!root){
+            return root;
+        }
         queue<Node*> q;
         q.push(root);
         while(!q.empty()){
             int n=q.size();
-            vector<Node*> arr;
             for(int i=0;i<n;i++){
                 Node* x=q.front();
                 q.pop();
-                arr.push_back(x);
+                if(i!=n-1){
+                    x->next=q.front();
+                }
                 if(x->left){
                     q.push(x->left);
                 }
                 if(x->right){
                     q.push(x->right);
-                }
-            }
-            level.push_back(arr);
-        }
-    }
-    Node* connect(Node* root) {
-        if(!root){
-            return root;
-        }
-        vector<vector<Node*>> level;
-        LoT(root,level);
-        for(auto it: level){
-            for(int i=0;i<it.size();i++){
-                if(i+1<it.size()){
-                    it[i]->next=it[i+1];
                 }
             }
         }
