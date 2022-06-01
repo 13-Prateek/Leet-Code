@@ -1,24 +1,40 @@
 class Solution {
 public:
-    bool dfs(int src, int parent, vector<int>& vis, vector<vector<int>>& graph){
-        vis[src]=1;
-        for(auto it: graph[src]){
-            if(!vis[it]){
-                if(dfs(it,src,vis,graph))return true;
-            }
-            else if(it!=parent)return true;
+    vector<int> parent;
+    vector<int> rank;
+    int find_parent(int a){
+        if(a==parent[a]){
+            return a;
         }
-        return false;
+        else{
+            return parent[a]=find_parent(parent[a]);
+        }
+    }
+    bool unionn(int a, int b){
+        int par_a=find_parent(a);
+        int par_b=find_parent(b);
+        if(par_a==par_b)return false;
+        if(rank[par_a]<rank[par_b]){
+            parent[par_a]=par_b;
+        }
+        else if(rank[par_a]>rank[par_b]){
+            parent[par_b]=par_a;
+        }
+        else{
+            parent[par_b]=par_a;
+            rank[par_a]++;
+        }
+        return true;
     }
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        int n=edges.size();
-        vector<vector<int>> graph(n+1);
-        vector<int> vis(n+1,0);
+        parent=vector<int>(1001);
+        rank=vector<int>(1001);
+        for(int i=0;i<1001;i++){
+            parent[i]=i;
+            rank[i]=0;
+        }
         for(auto it: edges){
-            fill(begin(vis),end(vis),0);
-            graph[it[0]].push_back(it[1]);
-            graph[it[1]].push_back(it[0]);
-            if(dfs(it[0],-1,vis,graph))return it;
+            if(!unionn(it[0],it[1]))return it;
         }
         return {};
     }
