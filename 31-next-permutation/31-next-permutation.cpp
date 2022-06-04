@@ -9,7 +9,7 @@ public:
             }
         }
         if(l<0){
-            sort(nums.begin(),nums.end());
+            reverse(nums.begin(),nums.end());
             return;
         }
         for(r=n-1;r>l;r--){
@@ -18,7 +18,7 @@ public:
                 break;
             }
         }
-        sort(nums.begin()+l+1,nums.end());
+        reverse(nums.begin()+l+1,nums.end());
         return;
     }
 };
