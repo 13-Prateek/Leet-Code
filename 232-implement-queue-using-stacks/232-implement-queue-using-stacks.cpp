@@ -15,15 +15,12 @@ public:
                 s2.push(s1.top());
                 s1.pop();
             }
-            int x=s2.top();
-            s2.pop();
-            return x;
+            
         }
-        else{
-            int x=s2.top();
-            s2.pop();
-            return x;
-        }
+        int x=s2.top();
+        s2.pop();
+        return x;
+        
     }
     
     int peek() {
@@ -32,12 +29,9 @@ public:
                 s2.push(s1.top());
                 s1.pop();
             }
-            return s2.top();
         }
-        else{
-            return s2.top();
-        }
-    }
+         return s2.top();
+    }     
     
     bool empty() {
         if(s1.empty() && s2.empty()){
