@@ -1,91 +1,16 @@
 class Solution {
 public:
     string intToRoman(int num) {
-        string ans="";
-            if(num>=1000){
-                int x=num/1000;
-                num=num%1000;
-                while(x!=0){
-                    ans+="M";
-                    x--;
-                }
+        int intCode[]={1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        string code[]={"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        
+        string s;
+        for(int i=0; i<13; ++i){
+            while(num>=intCode[i]){
+                s.append(code[i]);
+                num-=intCode[i];
             }
-            if(num>=900){
-                num=num-900;
-                ans+="CM";
-            }
-            if(num>=500){
-                num=num-500;
-                ans+="D";
-            }
-        if(num>=400){
-            num=num-400;
-            ans+="CD";
         }
-            if(num>=100){
-                int x=num/100;
-                num=num%100;
-                while(x!=0){
-                    ans+="C";
-                    x--;
-                }
-            }
-            if(num>=90){
-                num=num-90;
-                ans+="XC";
-            }
-            if(num>=50){
-                num=num-50;
-                ans+="L";
-            }
-            if(num>=40){
-                num=num-40;
-                ans+="XL";
-            }
-            if(num>=10){
-                int x=num/10;
-                num=num%10;
-                while(x!=0){
-                    ans+="X";
-                    x--;
-                }
-            }
-            if(num==9){
-                num=num-9;
-                ans+="IX";
-            }
-            if(num==8){
-                num=num-8;
-                ans+="VIII";
-            }
-            if(num==7){
-                num=num-7;
-                ans+="VII";
-            }
-            if(num==6){
-                num=num-6;
-                ans+="VI";
-            }
-            if(num==5){
-                num=num-5;
-                ans+="V";
-            }
-            if(num==4){
-                num=num-4;
-                ans+="IV";
-            }
-            if(num==3){
-                num=num-3;
-                ans+="III";
-            }
-            if(num==2){
-                num=num-2;
-                ans+="II";
-            }
-            if(num==1){
-                num=num-1;
-                ans+="I";
-            }
-        return ans;
+        return s;
     }
 };
