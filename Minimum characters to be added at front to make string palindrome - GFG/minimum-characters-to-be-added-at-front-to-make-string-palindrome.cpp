@@ -19,7 +19,7 @@ public:
         else{
             i=0;
             ans=n-j;
-            if(str[i]==str[j]){
+            while(str[i]==str[j]){
                 ans--;
                 i++;
             }
