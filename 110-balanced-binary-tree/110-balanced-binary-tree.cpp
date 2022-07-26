@@ -11,27 +11,24 @@
  */
 class Solution {
 public:
-    bool isBalanced(TreeNode* root) {
-        return dfsHeight (root) != -1;
+    int height(TreeNode* root, int &hdiff){
+        if(!root){
+            return 0;
+        }
+        int lh=height(root->left,hdiff);
+        int rh=height(root->right,hdiff);
+        hdiff=max(hdiff,abs(lh-rh));
+        return 1+max(lh,rh);
     }
-
-    int dfsHeight (TreeNode *root) {
-
-        if (root == NULL) return 0;
-        
-        int leftHeight = dfsHeight (root -> left);
-
-        if (leftHeight == -1) 
-            return -1;
-        
-        int rightHeight = dfsHeight (root -> right);
-
-        if (rightHeight == -1) 
-            return -1;
-        
-        if (abs(leftHeight - rightHeight) > 1)  
-            return -1;
-
-        return max (leftHeight, rightHeight) + 1;
+    bool isBalanced(TreeNode* root) {
+        if(!root){
+            return true;
+        }
+        int hdiff=0;
+        height(root,hdiff);
+        if(hdiff<=1){
+            return true;
+        }
+        return false;
     }
 };
