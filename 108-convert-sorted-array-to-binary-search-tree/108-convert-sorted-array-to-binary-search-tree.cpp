@@ -11,18 +11,18 @@
  */
 class Solution {
 public:
-    TreeNode* ctree(vector<int>& nums,int low,int high){
-        if(low>high){
+    TreeNode* ctree(int st, int end, vector<int> &nums){
+        if(st>end){
             return NULL;
         }
-        int mid=low+(high-low)/2;
-        TreeNode* root=new TreeNode(nums[mid]);
-        root->left=ctree(nums,low,mid-1);
-        root->right=ctree(nums,mid+1,high);
+        int mid=(st+end)>>1;
+        TreeNode* root= new TreeNode(nums[mid]);
+        root->left=ctree(st,mid-1,nums);
+        root->right=ctree(mid+1,end,nums);
         return root;
     }
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        int low=0,high=nums.size()-1;
-        return ctree(nums,low,high);
+        int l=0, h=nums.size()-1;
+        return ctree(l,h,nums);       
     }
 };
