@@ -28,10 +28,10 @@ public:
     bool hasNext() {
         return !st.empty();
     }
-    void pushAll(TreeNode* node){
-        while(node){
-            st.push(node);
-            node=node->left;
+    void pushAll(TreeNode* root){
+        while(root){
+            st.push(root);
+            root=root->left;
         }
     }
 };
