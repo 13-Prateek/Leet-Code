@@ -1,29 +1,32 @@
 class Solution {
 public:
-    bool dfs(int src, vector<vector<int>>& adj, vector<int>& visited, vector<int>& dfsvis){
-        visited[src]=1;
-        dfsvis[src]=1;
-        for(auto it: adj[src]){
-            if(!visited[it]){
-                if(dfs(it,adj,visited,dfsvis)) return true;
+    bool dfs(int src, vector<int> adj[], vector<int> &vis, vector<int> &dfsrec){
+        vis[src]=true;
+        dfsrec[src]=true;
+        //cycle exits if there a nde appears twice in recursion call stack
+        for(auto it:adj[src]){
+            if(!vis[it]){
+                if(dfs(it,adj,vis,dfsrec)){
+                    return true;
+                }
             }
-            else if(dfsvis[it]){
+            else if(dfsrec[it]){
                 return true;
             }
         }
-        dfsvis[src]=0;
+        dfsrec[src]=false;
         return false;
     }
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> adj(numCourses);
-        for(auto c : prerequisites){
-            adj[c[1]].push_back(c[0]);
+    bool canFinish(int numc, vector<vector<int>>& prereq) {
+        vector<int> adj[numc];
+        for(int i=0;i<prereq.size();i++){
+            adj[prereq[i][1]].push_back(prereq[i][0]);
         }
-        vector<int> visited(numCourses,0);
-        vector<int> dfsvis(numCourses,0);
-        for(int i=0;i<numCourses;i++){
-            if(!visited[i]){
-                if(dfs(i,adj,visited,dfsvis)){
+        vector<int> vis(numc,0);
+        vector<int> dfsrec(numc,0);
+        for(int i=0;i<numc;i++){
+            if(!vis[i]){
+                if(dfs(i,adj,vis,dfsrec)){
                     return false;
                 }
             }
