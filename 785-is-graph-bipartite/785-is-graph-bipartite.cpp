@@ -1,28 +1,28 @@
 class Solution {
 public:
-    bool bpt(int src,vector<vector<int>> graph,int color[]){
-        if(color[src]==-1){
-            color[src]=1;
+    bool dfs(int node, vector<vector<int>> adj,vector<int> &color){
+        if(color[node]==-1){
+            color[node]=1;
         }
-        for(auto it: graph[src]){
+        for(auto it: adj[node]){
             if(color[it]==-1){
-                color[it]=1-color[src];
-                if(!bpt(it,graph,color))return false;
+                color[it]=1-color[node];
+                if(!dfs(it,adj,color)){
+                    return false;
+                }
             }
-            else if(color[it]==color[src]){
+            else if(color[it]==color[node]){
                 return false;
             }
         }
         return true;
     }
     bool isBipartite(vector<vector<int>>& graph) {
-        int color[graph.size()];
-        memset(color,-1,sizeof(color));
-        for(int i=0;i<graph.size();i++){
-            if(color[i]==-1){
-                if(!bpt(i,graph,color)){
-                    return false;
-                }
+        int n=graph.size();
+        vector<int> color(n,-1);
+        for(int i=0;i<n;i++){
+            if(!dfs(i,graph,color)){
+                return false;
             }
         }
         return true;
