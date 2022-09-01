@@ -19,13 +19,13 @@ public:
         if(root->val>=maxi){
             ans++;
         }
-        int temp=maxi;
+        // int temp=maxi;
         if(root->val>=maxi){
             maxi=root->val;
         }
         recur(root->left,maxi);
         recur(root->right,maxi);
-        maxi=temp;
+        // maxi=temp;
     }
     int goodNodes(TreeNode* root) {
         int maxi=root->val;
